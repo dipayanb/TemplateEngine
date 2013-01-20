@@ -1,6 +1,5 @@
 package com.dipayan.core;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class TestTemplatePerformance {
 		StringBuilder sb = new StringBuilder();
 		List<String> variables = new ArrayList<String>();
 		
-		for(int i = 0; i < 100; i++) {
+		for(int i = 0; i < 400; i++) {
 			sb.append("This is line number ${line" + (i+1) + "}.\n");
 			variables.add("line" + (i+1));
 		}

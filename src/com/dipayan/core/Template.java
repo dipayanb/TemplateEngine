@@ -1,10 +1,8 @@
 package com.dipayan.core;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Template {
 
@@ -21,24 +19,17 @@ public class Template {
 	}
 
 	public String evaluate() {
-		String result = replaceVariables();
-		checkForMissingValue(result);
-		return result;
+		TemplateParser parser = new TemplateParser();
+		List<Segment> segments = parser.parseSegments(template);
+		return concatenate(segments);
 	}
 
-	private String replaceVariables() {
-		String result = template;
-		for (Entry<String, String> entry : variables.entrySet()) {
-			String regex = "\\$\\{" + entry.getKey() + "\\}";
-			result = result.replaceAll(regex, entry.getValue());
+	private String concatenate(List<Segment> segments) {
+		StringBuilder result = new StringBuilder();
+		for(Segment segment : segments) {
+			result.append(segment.evaluate(variables));
 		}
-		return result;
+		return result.toString();
 	}
 
-	private void checkForMissingValue(String result) {
-		Matcher m = Pattern.compile("\\$\\{.+\\}").matcher(result);
-		if(m.find()) {
-			throw new MissingValueException("No value for " + m.group());
-		}
-	}
 }

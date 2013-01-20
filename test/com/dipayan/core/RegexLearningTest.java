@@ -24,6 +24,7 @@ public class RegexLearningTest {
 		String haystack = "The needle shop sells needles";
 		String regex = "(needle)";
 		Matcher matcher = Pattern.compile(regex).matcher(haystack);
+		
 		assertTrue(matcher.find());
 		assertEquals("Wrong start index of 1st match", 4, matcher.start());
 		assertEquals("Wrong end index of 1st match", 10, matcher.end());
